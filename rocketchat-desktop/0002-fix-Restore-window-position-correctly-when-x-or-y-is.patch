@@ -1,0 +1,26 @@
+From aedae09dac3b3dadc9071d1be883a8285ca10fbd Mon Sep 17 00:00:00 2001
+From: Alynx Zhou <alynx.zhou@gmail.com>
+Date: Wed, 20 Jan 2021 12:28:32 +0800
+Subject: [PATCH 2/2] fix: Restore window position correctly when x or y is 0
+ (#1934)
+
+---
+ src/ui/main/rootWindow.ts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/ui/main/rootWindow.ts b/src/ui/main/rootWindow.ts
+index 0f052cf91..ee623ed9b 100644
+--- a/src/ui/main/rootWindow.ts
++++ b/src/ui/main/rootWindow.ts
+@@ -102,7 +102,7 @@ export const applyRootWindowState = (browserWindow: BrowserWindow): void => {
+     return;
+   }
+ 
+-  if (!x || !y) {
++  if (x == null || y == null) {
+     browserWindow.setBounds({ width, height });
+   } else {
+     browserWindow.setBounds({ x, y, width, height });
+-- 
+2.30.0
+

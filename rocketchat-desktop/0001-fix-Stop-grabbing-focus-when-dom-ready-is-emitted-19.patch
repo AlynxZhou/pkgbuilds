@@ -1,0 +1,29 @@
+From a84bdf7b0a859e41c345d55787e458bdce1f1e00 Mon Sep 17 00:00:00 2001
+From: Alynx Zhou <alynx.zhou@gmail.com>
+Date: Wed, 20 Jan 2021 11:55:49 +0800
+Subject: [PATCH 1/2] fix: Stop grabbing focus when dom-ready is emitted
+ (#1934)
+
+---
+ src/ui/main/serverView/index.ts | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/src/ui/main/serverView/index.ts b/src/ui/main/serverView/index.ts
+index 5720c300d..df8a38fca 100644
+--- a/src/ui/main/serverView/index.ts
++++ b/src/ui/main/serverView/index.ts
+@@ -93,7 +93,10 @@ const initializeServerWebContents = (serverUrl: string, guestWebContents: WebCon
+   };
+ 
+   const handleDomReady = (): void => {
+-    guestWebContents.focus();
++    // Don't focus if a dom-ready is emitted, it might be a webpage reloading
++    // caused by bad network. And when user is working, he/she does not want
++    // to be bothered by focus grabbing caused by background webpage reloading.
++    // guestWebContents.focus();
+   };
+ 
+   const handleDidNavigateInPage = (
+-- 
+2.30.0
+
